@@ -1,17 +1,22 @@
-const express = require('express');
-const { default: serverlessExpress } = require('@vendia/serverless-express');
-const cors = require('cors');
-require('dotenv').config();
+// /api/index.js
 
-const noteRoutes = require('../routes/noteRoutes');
+const express = require("express");
+const serverlessExpress = require("@vendia/serverless-express");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use('/api/notes', noteRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Notes App Backend running on Vercel 🎉');
+// Example route
+app.get("/", (req, res) => {
+  res.send("✅ Notes API is working on Vercel Serverless!");
 });
 
+// You can add more routes like this
+app.get("/notes", (req, res) => {
+  res.json([
+    { id: 1, title: "First Note" },
+    { id: 2, title: "Second Note" }
+  ]);
+});
+
+// Export the handler for Vercel
 module.exports = serverlessExpress({ app });
